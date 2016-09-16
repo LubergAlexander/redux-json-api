@@ -163,7 +163,8 @@ export const readEndpoint = (endpoint, {
 
 export const updateEntity = (entity, {
   onSuccess: onSuccess = noop,
-  onError: onError = noop
+  onError: onError = noop,
+  credentials: credentials = 'omit',
 } = {}) => {
   if (onSuccess !== noop || onError !== noop) {
     console.warn('onSuccess/onError callbacks are deprecated. Please use returned promise: https://github.com/dixieio/redux-json-api/issues/17');
@@ -181,7 +182,8 @@ export const updateEntity = (entity, {
         method: 'PATCH',
         body: JSON.stringify({
           data: entity
-        })
+        }),
+        credentials
       }).then(json => {
         dispatch(apiUpdated(json.data));
         onSuccess(json);
